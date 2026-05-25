@@ -1,8 +1,8 @@
 {
-    "EmailDestino": "jpgarciarangel2@gmail.com",
+    "EmailDestino": "email_destino@gmail.com",
     "SmtpHost": "smtp.gmail.com",
-    "SmtpUsuario": "jpgarciarangel2@gmail.com",
-    "SmtpSenha": "yfcu zrhj zzie zkcy",
-    "TokenBrapi": "ffoWUuAj4w3Dj7zHKgnV8b",
+    "SmtpUsuario": "email_remetente@gmail.com",
+    "SmtpSenha": "sua_senhadeapp",
+    "TokenBrapi": "API_KEY_Brapi",
     "IntervaloSegundos": 60
 }

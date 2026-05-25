@@ -9,8 +9,10 @@ using System.Text.RegularExpressions;
 
 namespace EnvioEmail
 {
+    // Classe responsável por montar e enviar os emails por SMTP
     public class Email
     {
+        //Construtor para dados do servidor, remetente e senha
         public string Provedor { get; private set; }
         public string Username { get; private set; }
         public string Password { get; private set; }
@@ -21,12 +23,14 @@ namespace EnvioEmail
             Username = username ?? throw new ArgumentNullException(nameof(username));
             Password = password ?? throw new ArgumentNullException(nameof(password));
         }
+        // Método para monstar e em seguida a enviar o email
         public void EnviarEmail( List<string> emailTo, string assunto, string mensagem)
         {
             var mail = PrepararMensagem(emailTo, assunto, mensagem);
             EnviarEmailSMTP(mail);
         }
 
+        // monta o objeto MailMessage com remente, destinatário, assunto e corpo do email
         private MailMessage PrepararMensagem(List<string> emailTo, string assunto, string mensagem)
         {
             var mail = new MailMessage();
@@ -49,24 +53,25 @@ namespace EnvioEmail
 
         private bool ValidarEmail(string email)
         {
-            Regex expression = new Regex(@"\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}");
+            Regex expression = new Regex(@"\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}"); // Validaçao simples para conferir se o texto tem o formato de email
             if (expression.IsMatch(email))
                 return true;
 
             return false;
         }
 
+        // conecta no servidor SMTP e envia a mensagem de fato
         private void EnviarEmailSMTP(MailMessage mensagem)
         {
             using (SmtpClient smtp = new SmtpClient())
             {
-                smtp.Host = Provedor;
-                smtp.Port = 587;
-                smtp.EnableSsl = true;
-                smtp.Timeout = 50000;
+                smtp.Host = Provedor; // servidor de saída
+                smtp.Port = 587; //Porta de submissão
+                smtp.EnableSsl = true;  
+                smtp.Timeout = 50000;   // Desiste após 50s sem resposta
                 smtp.UseDefaultCredentials = false;
-                smtp.Credentials = new NetworkCredential(Username, Password);
-                smtp.Send(mensagem);
+                smtp.Credentials = new NetworkCredential(Username, Password); // Login no SMTP
+                smtp.Send(mensagem); // Envia o email
                 smtp.Dispose();
             }
         }
